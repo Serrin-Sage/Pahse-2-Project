@@ -2,7 +2,7 @@ const Header = () => {
     const refreshPage = () => {
         window.location.reload(false)
     }
-
+    
     return (
         <div className="header">
             <div className="left-container">

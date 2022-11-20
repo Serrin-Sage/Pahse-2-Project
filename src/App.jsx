@@ -15,6 +15,7 @@ function App() {
       const randomSolution = data[Math.floor(Math.random() * data.length)]
       setSolution(randomSolution.word)
     })
+    .catch(error => console.log(error))
   }, [setSolution])
 
   return (

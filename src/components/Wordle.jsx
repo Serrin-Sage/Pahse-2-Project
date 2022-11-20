@@ -1,8 +1,10 @@
+import WordRow from "./WordRow"
+
 const Wordle = ({ solution }) => {
-    
+
     return (
         <div>
-            <p>{solution}</p>
+            <WordRow />
         </div>
     )
 }
