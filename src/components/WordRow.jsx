@@ -1,5 +1,6 @@
-const WordRow = () => {
+const WordRow = ({ guessed, currentGuess }) => {
 
+    //if the guess 
     return (
         <div className="row">
             <div></div>
