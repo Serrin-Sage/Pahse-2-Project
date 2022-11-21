@@ -1,10 +1,9 @@
-const WordRow = ({ guessed, currentGuess }) => {
+const WordRow = ({ guess, currentGuess }) => {
 
-    //if the guess 
-    if (guessed) {
+    if (guess) {
         return (
             <div className='row past'>
-                {guessed.map((letter, i) => (
+                {guess.map((letter, i) => (
                     <div key={i} className={letter.color}>{letter.key}</div>
                 ))}
             </div>
@@ -25,15 +24,17 @@ const WordRow = ({ guessed, currentGuess }) => {
           </div>
         )
       }
-    return (
-        <div className="row">
+    
+      return (
+        <div className='row'>
             <div></div>
             <div></div>
             <div></div>
             <div></div>
             <div></div>
         </div>
-    )
+      )
+
 }
 
 export default WordRow

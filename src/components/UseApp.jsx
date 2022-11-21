@@ -1,114 +1,158 @@
-import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, useState } from "react"
+import { ToastContainer, toast } from 'react-toastify'
 
 const UseApp = (solution) => {
 
-    //number of turns/tries
     const [turn, setTurn] = useState(0)
-    //current guess
     const [currentGuess, setCurrentGuess] = useState("")
-    //array of guesses to display
-    const [wordGuess, setWordGuess] = useState([...Array(6)])
-    //guess history to check later
-    const [guessHistory, setGuessHistory] = useState([])
-    //check if guess os correct
+    const [guesses, setGuesses] = useState([...Array(6)])
+    const [history, setHistory] = useState([])
     const [isCorrect, setIsCorrect] = useState(false)
-    //keep track of used keys (letters)
     const [usedKeys, setUsedKeys] = useState({})
 
-    //format user guess into array of letter objects
+    // formats a guess from the user into an array of letter objects
     const formatGuess = () => {
-        let solutionArray = [...solution]
-        let formattedGuess = [...currentGuess].map((letter) => {
-            return {
-                key: letter,
-                color: 'grey'
-            }
-        })
-        //Will need to check for correct or incorrect placement
+       let solutionArray = [...solution]
+       let formattedGuess = [...currentGuess].map((letter) => {
+         return { key: letter, color: 'grey'}
+       })
 
-        return formattedGuess
+       // find any green letters (correct placement)
+       formattedGuess.forEach((letter, i) => {
+         if (solutionArray[i] === letter.key) {
+            formattedGuess[i].color = 'green'
+            solutionArray[i] = null
+         }
+       })
+
+       // find any yellow colors (incorrect placement)
+       formattedGuess.forEach((letter, i) => {
+         if (solutionArray.includes(letter.key) && letter.color !== 'green') {
+            formattedGuess[i].color = 'yellow'
+            solutionArray[solutionArray.indexOf(letter.key)] = null
+         }
+       })
+
+       return formattedGuess
     }
 
-    //adds a new guess to the wordGuess and guessHistory
-    //updates the isCorrect state to check if the guess is correct
-    //update the turn tracker
+    // adds a new guess to the guesses state
+    // updates the isCorrect state if the guess is correct
+    // add one to the turn state
     const addNewGuess = (formattedGuess) => {
         if (currentGuess === solution) {
             setIsCorrect(true)
         }
 
-        //used to dispaly previous guesses
-        setWordGuess((previousGuesses) => {
+        setGuesses((previousGuesses) => {
             let newGuesses = [...previousGuesses]
             newGuesses[turn] = formattedGuess
-
             return newGuesses
         })
 
-        //used to check previous input word history
-        setGuessHistory((previousHistory) => {
+        setHistory((previousHistory) => {
             return [...previousHistory, currentGuess]
         })
 
-        //used to track number of turns taken by user
-        setTurn((turnCount) => {
-            return turnCount + 1
+        setTurn((previousTurn) => {
+            return previousTurn + 1
         })
 
-        //reset current guess state to empty string
+        setUsedKeys((previousUsedKeys) => {
+            let newKeys = {...previousUsedKeys}
+
+            formattedGuess.forEach((letter) => {
+                const currentColor = newKeys[letter.key]
+
+                if (letter.color === 'green') {
+                    newKeys[letter.key] = 'green'
+                    return
+                }
+                if (letter.color === 'yellow' && currentColor !== 'green') {
+                    newKeys[letter.key] = 'yellow'
+                    return
+                }
+                if (letter.color === 'grey' && currentColor !== 'green' && currentColor !== 'yellow') {
+                    newKeys[letter.key] = 'grey'
+                    return
+                }
+            })
+
+            return newKeys
+        })
+
         setCurrentGuess('')
     }
 
-    //handle keyup events and track guess by user
-    //if user presses enter and the guess is valid, add new guess
-    const handleKeyEvent = ({ key }) => {
+    // handle keyup events and track current guess
+    // if user presses enter, add the new guess
 
-        //handle the submit from user (pressing enter), only add guess if turn is less than 5
-        //do not add duplicate words
-        //check if word is 5 characters long
-        //check if word is in word list
-        if (key === 'Enter') {
+    // let test = []
+    // useEffect(()=> {
+    //     fetch('http://localhost:3000/solutions')
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         test = data.map((word))
+    //     })
+    //     }, [])
+    
+    const handleKeyup = ({ key }) => {
+        const wordleAlert = (message) => toast({message})
+        // handle submit from user, only add guess if turn is less than 5
+        // do not allow duplicate words
+        // check word is 5 characters long
+        if ( key === 'Enter') {
+            wordleAlert("HELLO")
             if (turn > 5) {
-                console.log("you used all your guesses")
-                return
+                wordleAlert("Out of Guesses")
+                return (
+                    <ToastContainer />
+                )
             }
 
             if (history.includes(currentGuess)) {
-                console.log("Word already guessed")
-                return
+                console.log("Already guessed word")
+                wordleAlert("Word already guessed")
+                return (
+                    <div>
+                        <ToastContainer />
+                    </div>
+                )
             }
 
             if (currentGuess.length !== 5) {
-                console.log("Guess must be 5 letters")
-                return
+                console.log("Word must be 5 letters")
+                wordleAlert("Guess must be 5 letters")
+                return (
+                    <div>
+                        <ToastContainer />
+                    </div>
+                )
             }
 
-            const formattedWord = formatGuess()
-            addNewGuess(formattedWord)
+            const formatted = formatGuess()
+            addNewGuess(formatted)
+        }
 
-            //remove previous character from guess string if user presses Backspace
-            if (key === 'Backspace') {
-                setCurrentGuess((goBackOne) => {
-                    return goBackOne.slice(0, -1)
+        // remove last character from string if Backspace pressed
+        if ( key === 'Backspace') {
+            setCurrentGuess((previous) => {
+                return previous.slice(0, -1)
+            })
+            return
+        }
+
+        // test key pressed to regex pattern and guess is less than 5
+        if (/^[A-Za-z]$/.test(key)) {
+            if (currentGuess.length < 5) {
+                setCurrentGuess((previous) => {
+                    return previous + key
                 })
-                return
-            }
-
-            //tests if key pressed is a letter (using regex) and guess is less than 5
-            if (/^[A-Za-z]$/.test(key)) {
-                console.log(key)
-                if (currentGuess.length < 5) {
-                    setCurrentGuess((previousKey) => {
-                        return previousKey + key
-                    })
-                }
             }
         }
     }
 
-    return {turn, currentGuess, wordGuess, isCorrect, handleKeyEvent}
+    return {turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup}
 }
 
 export default UseApp

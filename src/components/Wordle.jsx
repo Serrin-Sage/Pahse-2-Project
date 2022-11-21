@@ -1,35 +1,39 @@
-import { useEffect, useState } from "react"
-import UseApp from "./UseApp"
-import WordRow from "./WordRow"
-import WordGrid from "./WordGrid"
-import Keypad from "./Keypad"
+import { useEffect, useState } from "react";
+import UseApp from "./UseApp";
+import WordGrid from "./WordGrid";
+import Keypad from "./Keypad";
+
 const Wordle = ({ solution }) => {
+  const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys } = UseApp(solution)
+  const [showModal, setShowModal] = useState(false)
+  useEffect(() => {
+    window.addEventListener('keyup', handleKeyup)
+
+    if (isCorrect) {
+        setTimeout(() => setShowModal(true), 1500)
+        window.removeEventListener('keyup', handleKeyup)
+    }
+
+    if (turn > 5) {
+        setTimeout(() => setShowModal(true), 1500)
+        window.removeEventListener('keyup', handleKeyup)
+    }
+
+    return () => window.removeEventListener('keyup', handleKeyup)
+  }, [handleKeyup, isCorrect, turn])
+  
+  
+  return (
     
-    //creeate an object of current guess, key event, guesses, if guess is correct, turn number, and used keys
-    const { currentGuess, handleKeyEvent, guesses, isCorrect, turnNumber, usedKeys } = UseApp(solution)
-    
-    //listen for key events (eventually will be used for Modals)
-    useEffect(() => {
-        //listen for key up
-        window.addEventListener('keyup', handleKeyEvent)
-        //remove if isCorrect is true or turn is greater than 5 (both signify GAME OVER)
-        if (isCorrect || turnNumber > 5) {
-            window.removeEventListener('keyup', handleKeyEvent)
-        }
+    <div>
+        {/* <div>solution - {solution}</div>
+        <div>Current Guess - {currentGuess}</div> */}
 
-        return () => window.removeEventListener('keyup', handleKeyEvent)
-
-        //runs only when these dependencies change
-    }, [handleKeyEvent, isCorrect, turnNumber])
-
-    console.log(solution)
-    return (
-        <div>
-            <WordGrid currentGuess={currentGuess} guesses={guesses} turnNumber={turnNumber} />
-
-            <Keypad />
-        </div>
-    )
+        <WordGrid currentGuess={currentGuess} guesses={guesses} turn={turn}/>
+        {/* <Keypad usedKeys={usedKeys}/> */}
+        {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution}/>}
+    </div>
+  )
 }
 
 export default Wordle
