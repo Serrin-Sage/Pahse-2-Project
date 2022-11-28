@@ -26,7 +26,18 @@ function App() {
     <div className="App">
       <Header />
       <Wordle solution={solution} wordlist={wordlist}/>
-      <ToastContainer />
+      <ToastContainer 
+        position="top-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="dark" 
+        backgroundColor={"red"}/>
     </div>
   )
 }

@@ -97,7 +97,7 @@ const UseApp = (solution, wordlist) => {
         // handle submit from user, only add guess if turn is less than 5
         // do not allow duplicate words
         // check word is 5 characters long
-        const wordleAlert = (message) => toast(message)
+        const wordleAlert = (message) => toast.error(message)
         if ( key === 'Enter') {
             if (turn > 5) {
                 wordleAlert("Out of Guesses")
