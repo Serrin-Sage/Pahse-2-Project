@@ -5,13 +5,13 @@ const Header = () => {
     return (
         <div className="header">
             <div className='left-container'>
-
+                <button>Add a Word</button>
             </div>
             <div className='middle-container'>
                 <h1 className="title">Wordle Project</h1>
             </div>
             <div className="right-container">
-            <button onClick={refreshPage} className="reset-button">New Word</button>
+                <button onClick={refreshPage} className="reset-button">Get New Word</button>
             </div>
         </div>
     )

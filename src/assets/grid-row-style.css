@@ -1,3 +1,7 @@
+.main-grid-container {
+  margin-bottom: 1rem;
+}
+
 .row {
     text-align: center;
     display: flex;
@@ -60,15 +64,15 @@
 }
 
 /*animations*/
-/* @keyframes flip {
+@keyframes flip {
     0% {
       transform: rotateX(0);
-      background: #fff;
+      background: rgb(207, 207, 207);
       border-color: #333;
     }
     45% {
       transform: rotateX(90deg);
-      background: #fff;
+      background: rgb(207, 207, 207);
       border-color: #333;
     }
     55% {
@@ -121,4 +125,4 @@
       40%, 100% {
         transform: rotateZ(0);
       }
-} */
+}

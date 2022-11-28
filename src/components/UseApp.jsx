@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import { ToastContainer, toast } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 
 const UseApp = (solution) => {
-
+    
+    //UseStates for turn count, current guess string, guess array, guess history array, guess true or false, used keys/letters object
     const [turn, setTurn] = useState(0)
     const [currentGuess, setCurrentGuess] = useState("")
     const [guesses, setGuesses] = useState([...Array(6)])
@@ -14,6 +16,7 @@ const UseApp = (solution) => {
     const formatGuess = () => {
        let solutionArray = [...solution]
        let formattedGuess = [...currentGuess].map((letter) => {
+        //gives key and adds property for css styling
          return { key: letter, color: 'grey'}
        })
 
@@ -85,49 +88,28 @@ const UseApp = (solution) => {
     }
 
     // handle keyup events and track current guess
-    // if user presses enter, add the new guess
-
-    // let test = []
-    // useEffect(()=> {
-    //     fetch('http://localhost:3000/solutions')
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         test = data.map((word))
-    //     })
-    //     }, [])
-    
+    // if user presses enter, add the new guess 
     const handleKeyup = ({ key }) => {
-        const wordleAlert = (message) => toast({message})
         // handle submit from user, only add guess if turn is less than 5
         // do not allow duplicate words
         // check word is 5 characters long
+        const wordleAlert = (message) => toast(message)
         if ( key === 'Enter') {
-            wordleAlert("HELLO")
             if (turn > 5) {
                 wordleAlert("Out of Guesses")
-                return (
-                    <ToastContainer />
-                )
+                return
             }
 
             if (history.includes(currentGuess)) {
                 console.log("Already guessed word")
                 wordleAlert("Word already guessed")
-                return (
-                    <div>
-                        <ToastContainer />
-                    </div>
-                )
+                return
             }
 
             if (currentGuess.length !== 5) {
                 console.log("Word must be 5 letters")
                 wordleAlert("Guess must be 5 letters")
-                return (
-                    <div>
-                        <ToastContainer />
-                    </div>
-                )
+                return
             }
 
             const formatted = formatGuess()

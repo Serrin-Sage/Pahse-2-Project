@@ -24,18 +24,17 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-evenly;
     width: 100vw;
-    margin-left: auto;
-    margin-right: auto;
+    
     margin-bottom: 2rem;
     box-shadow: 0px 0px 10px 0;
-    padding: 0 15px;
     position: relative;
     background-color: black;
     color: white;
   }
   
-  .left-container {
+  /* .left-container {
     justify-content: flex-start;
     flex-grow: 1;
     flex-basis: 50%;
@@ -54,7 +53,7 @@ body {
     justify-content: flex-end;
     flex-grow: 1;
     flex-basis: 50%;
-  }
+  } */
   
   .title {
     font-family:'Times New Roman', Times, serif;
@@ -64,7 +63,7 @@ body {
   }
   
   
-  .reset-button {
+  /* .reset-button {
     border: none;
     cursor: pointer;
     border-radius: 8px;
@@ -89,6 +88,6 @@ body {
   .reset-button:active {
     transform: translate3d(1px, 1px, 0);
     box-shadow: 1.5px 2.5px 0 0;
-  }
+  } */
   
   

@@ -6,6 +6,7 @@ import Keypad from "./Keypad";
 const Wordle = ({ solution }) => {
   const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys } = UseApp(solution)
   const [showModal, setShowModal] = useState(false)
+  
   useEffect(() => {
     window.addEventListener('keyup', handleKeyup)
 
@@ -25,7 +26,7 @@ const Wordle = ({ solution }) => {
   
   return (
     
-    <div>
+    <div className="main-grid-container">
         {/* <div>solution - {solution}</div>
         <div>Current Guess - {currentGuess}</div> */}
 
