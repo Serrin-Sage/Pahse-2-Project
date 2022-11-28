@@ -3,8 +3,9 @@ import UseApp from "./UseApp";
 import WordGrid from "./WordGrid";
 import Keypad from "./Keypad";
 
-const Wordle = ({ solution }) => {
-  const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys } = UseApp(solution)
+const Wordle = ({ solution, wordlist }) => {
+  //create object of current guess, Keyup event event, guesses, correct boolean, turn number all from UseApp
+  const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys } = UseApp(solution, wordlist)
   const [showModal, setShowModal] = useState(false)
   
   useEffect(() => {

@@ -8,7 +8,7 @@ function App() {
   
   //Use state to get word solution
   const [solution, setSolution] = useState("")
-
+  const [wordlist, setWordList] = useState([])
   //useEffect will run any time the solution changes
   useEffect(() => {
     fetch("http://localhost:3000/solutions")
@@ -17,16 +17,15 @@ function App() {
       //grab a random word from the database and set it to the solution word
       const randomSolution = data[Math.floor(Math.random() * data.length)]
       setSolution(randomSolution.word)
-      
+      setWordList(data)
     })
     .catch(error => console.log(error))
   }, [setSolution])
-  console.log(solution)
 
   return (
     <div className="App">
       <Header />
-      <Wordle solution={solution} />
+      <Wordle solution={solution} wordlist={wordlist}/>
       <ToastContainer />
     </div>
   )

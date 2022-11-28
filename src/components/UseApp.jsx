@@ -2,8 +2,12 @@ import { useEffect, useState } from "react"
 import { ToastContainer, toast } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
 
-const UseApp = (solution) => {
+const UseApp = (solution, wordlist) => {
     
+    let wordArray = wordlist.map(item => 
+        item.word
+    )
+   
     //UseStates for turn count, current guess string, guess array, guess history array, guess true or false, used keys/letters object
     const [turn, setTurn] = useState(0)
     const [currentGuess, setCurrentGuess] = useState("")
@@ -112,6 +116,11 @@ const UseApp = (solution) => {
                 return
             }
 
+            if (!wordArray.includes(currentGuess)) {
+                console.log("NO")
+                wordleAlert("Not a word in Word List")
+                return
+            }
             const formatted = formatGuess()
             addNewGuess(formatted)
         }
