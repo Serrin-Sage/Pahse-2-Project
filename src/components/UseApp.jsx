@@ -151,7 +151,7 @@ const UseApp = (solution) => {
             }
         }
     }
-
+    
     return {turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup}
 }
 

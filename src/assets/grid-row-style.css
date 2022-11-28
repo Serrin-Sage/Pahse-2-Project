@@ -28,7 +28,7 @@
 
 .row > div.grey {
     --background: #a1a1a1;
-    --border-color: #a1a1a1;
+    --border-color: rgb(180, 180, 180);
     animation: flip 0.4s ease forwards;
 }
 
@@ -60,25 +60,25 @@
 }
 
 /*animations*/
-/* @keyframes flip {
+@keyframes flip {
     0% {
-      transform: rotateX(0);
+      /* transform: rotateX(0); */
       background: #fff;
       border-color: #333;
     }
     45% {
-      transform: rotateX(90deg);
+      /* transform: rotateX(90deg); */
       background: #fff;
       border-color: #333;
     }
     55% {
-      transform: rotateX(90deg);
+      /* transform: rotateX(90deg); */
       background: var(--background);
       border-color: var(--border-color);
       color: #eee;
     }
     100% {
-      transform: rotateX(0);
+      /* transform: rotateX(0); */
       background: var(--background);
       border-color: var(--border-color);
       color: #eee;
@@ -99,7 +99,7 @@
     }
 }
 
-@keyframes wiggle {
+/* @keyframes wiggle {
     0%, 7% {
         transform: rotateZ(0);
       }
