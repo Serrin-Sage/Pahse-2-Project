@@ -1,0 +1,9 @@
+.form-container {
+    background: rgba(255, 255, 255, 0.7);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 8rem;
+        left: 0;
+        animation: fadein 0.35s ease-in forwards;
+}

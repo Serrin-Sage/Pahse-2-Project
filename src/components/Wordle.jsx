@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UseApp from "./UseApp";
 import WordGrid from "./WordGrid";
+import Modal from "./Modal";
 import Keypad from "./Keypad";
 
 const Wordle = ({ solution, wordlist }) => {
